@@ -17,7 +17,11 @@ const resolvers = {
 
   Mutation: {
     
-    // TODO: add a mutation for AddUser
+    AddUser: async (parent, { username, email, password, bookCount, savedBooks}) => {
+      const user = await User.create({ username, email, password, bookCount, savedBooks});
+      const token = signToken(user);
+      return {token, user};
+    },
 
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
